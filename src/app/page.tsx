@@ -1,4 +1,6 @@
 import Image from "next/image";
+import SkillsList from "./ui/SkillsList";
+import SkillsListItem from "./ui/SkillsListItem";
 const faceSelfie = "/placeholder.png";
 
 export default function Home() {
@@ -21,6 +23,14 @@ export default function Home() {
         </div>
       </div>
       <h1 className="text-3xl sm:text-5xl self-start">Technical Skills</h1>
+      <SkillsList
+        skillsListItems={
+          <SkillsListItem
+            skillIconLink="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg"
+            skillName="React"
+          />
+        }
+      />
     </main>
   );
 }
