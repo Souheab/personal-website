@@ -8,6 +8,21 @@ const config: Config = {
   ],
   theme: {
     extend: {
+
+      animation: {
+        "fade-in": "fadeIn 1s ease-in-out",
+      },
+
+      keyframes: {
+        fadeIn: {
+          "0%": {
+            opacity: '0',
+            transform: 'translateY(100px)',
+          },
+          "100%": { opacity: '1' },
+        },
+      },
+
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
