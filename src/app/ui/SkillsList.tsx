@@ -4,6 +4,6 @@ interface SkillsListProps {
 
 export default function SkillsList(props: SkillsListProps) {
   return (
-    <div className="flex border border-black">{props.skillsListItems}</div>
+    <div className="flex-col border border-black">{props.skillsListItems}</div>
   );
 }
