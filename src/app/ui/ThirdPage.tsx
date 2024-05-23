@@ -1,10 +1,9 @@
 
 export default function ThirdPage() {
   return (
-    <div>
-      <h1 className="text-3xl sm:text-5xl self-start">Contact Me</h1>
-      <div className="flex flex-col justify-center items-center">
-        <div className="text-xl my-4">Write me an email:</div>
+    <section className="panel contact-info-section-div min-h-screen relative flex flex-col items-center">
+        <h1 className="text-5xl sm:text-5xl py-10 min mb-20 text-center">Contact Me</h1>
+        <div className="text-xl my-4 mt-40">Write me an email:</div>
         <a
           href="mailto:souheab.ja@gmail.com"
           className="text-blue-500 text-2xl hover:underline"
@@ -25,8 +24,10 @@ export default function ThirdPage() {
           >
             <img className="w-10" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" />
           </a>
-        </div>
       </div>
-    </div>
+      <div className="absolute bottom-0">
+        <div className="py-5">© 2024 Souheab, All rights reserved.</div>
+      </div>
+    </section>
   );
 }
