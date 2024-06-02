@@ -19,21 +19,6 @@ export default function Home() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  useEffect(() => {
-    let scrollPosition = 0;
-
-    const handleResize = () => {
-      scrollPosition = window.scrollY || window.pageYOffset;
-      setIsMobile(window.innerWidth <= 768);
-      window.scrollTo(0, scrollPosition);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-
   return (
 
     <main className="flex min-h-screen flex-col items-center justify-between">
