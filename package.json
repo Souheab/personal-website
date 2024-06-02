@@ -18,8 +18,7 @@
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
-    "react-page-scroller": "^3.0.1",
-    "react-scroll": "^1.9.0"
+    "react-page-scroller": "^3.0.1"
   },
   "devDependencies": {
     "@types/node": "^20",
