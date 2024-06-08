@@ -31,6 +31,12 @@ const handleMouseDownPassword = (
   event.preventDefault();
 };
 
+const emailValidationSchema = Joi.string()
+  .email({ tlds: { allow: false } })
+  .required();
+
+const passwordValidationSchema = Joi.string().min(8).required();
+
 export default function SignUpComponent() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -38,11 +44,6 @@ export default function SignUpComponent() {
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickShowConfirmPassword = () =>
     setShowConfirmPassword((show) => !show);
-
-  const emailValidationSchema = Joi.string()
-    .email({ tlds: { allow: false } })
-    .required();
-  const passwordValidationSchema = Joi.string().min(8).required();
   return (
     <div className="flex flex-col justify-center items-center h-screen bg-slate-100">
       <Formik
@@ -141,7 +142,7 @@ export default function SignUpComponent() {
                 fullWidth
                 name="confirmPassword"
                 error={(errors.confirmPassword && touched.confirmPassword) !== undefined}
-                helperText={(errors.confirmPassword && touched.confirmPassword) !== undefined ? "Passwords do not match"  : undefined}
+                helperText={(errors.confirmPassword && touched.confirmPassword) !== undefined ? "Passwords do not match" : undefined}
                 placeholder="Confirm Password"
                 type="password"
                 onChange={handleChange}
