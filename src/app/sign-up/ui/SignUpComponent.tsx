@@ -1,4 +1,3 @@
-"use client";
 import {
   TextField,
   Button,
@@ -7,12 +6,16 @@ import {
   createTheme,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import GoogleIcon from "@mui/icons-material/Google";
 import { red, blue } from "@mui/material/colors";
 import { useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import { Formik } from "formik";
+import { createUser } from "../../logic/db";
 import Joi from "joi";
+
+interface SignUpComponentProps {
+  onSignUp: (signUpSuccess: boolean) => void;
+}
 
 const theme = createTheme({
   palette: {
@@ -37,7 +40,7 @@ const emailValidationSchema = Joi.string()
 
 const passwordValidationSchema = Joi.string().min(8).required();
 
-export default function SignUpComponent() {
+export default function SignUpComponent(props: SignUpComponentProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -52,8 +55,26 @@ export default function SignUpComponent() {
           password: "",
           confirmPassword: "",
         }}
-        onSubmit={(values) => {
-          console.log(values);
+        onSubmit={(values, { setSubmitting }) => {
+          createUser({
+            email: values.email,
+            password: values.password,
+            createdAt: new Date(),
+          }).then(() => {
+            setTimeout(() => {
+              setSubmitting(false);
+              props.onSignUp(true);
+            }
+              , 500);
+          }).catch((e) => {
+            setTimeout(() => {
+              console.log("unable to create user");
+              console.log(e);
+              setSubmitting(false);
+              props.onSignUp(false);
+            }
+              , 500);
+          });
         }}
         validate={(values) => {
           const errors: any = {};
@@ -63,7 +84,9 @@ export default function SignUpComponent() {
             errors.email = emailValidation.error;
           }
 
-          const passwordValidation = passwordValidationSchema.validate(values.password);
+          const passwordValidation = passwordValidationSchema.validate(
+            values.password,
+          );
 
           if (passwordValidation.error) {
             errors.password = passwordValidation.error;
@@ -99,7 +122,11 @@ export default function SignUpComponent() {
               <TextField
                 name="email"
                 error={(errors.email && touched.email) !== undefined}
-                helperText={(errors.email && touched.email) !== undefined ? "Please enter a valid email address" : undefined}
+                helperText={
+                  (errors.email && touched.email) !== undefined
+                    ? "Please enter a valid email address"
+                    : undefined
+                }
                 fullWidth
                 value={values.email}
                 onChange={handleChange}
@@ -113,7 +140,11 @@ export default function SignUpComponent() {
                 fullWidth
                 name="password"
                 error={(errors.password && touched.password) !== undefined}
-                helperText={(errors.password && touched.password) !== undefined ? "Password must be at least 8 characters long" : undefined}
+                helperText={
+                  (errors.password && touched.password) !== undefined
+                    ? "Password must be at least 8 characters long"
+                    : undefined
+                }
                 placeholder="Enter your password"
                 type="password"
                 onChange={handleChange}
@@ -141,8 +172,16 @@ export default function SignUpComponent() {
               <TextField
                 fullWidth
                 name="confirmPassword"
-                error={(errors.confirmPassword && touched.confirmPassword) !== undefined}
-                helperText={(errors.confirmPassword && touched.confirmPassword) !== undefined ? "Passwords do not match" : undefined}
+                error={
+                  (errors.confirmPassword && touched.confirmPassword) !==
+                  undefined
+                }
+                helperText={
+                  (errors.confirmPassword && touched.confirmPassword) !==
+                    undefined
+                    ? "Passwords do not match"
+                    : undefined
+                }
                 placeholder="Confirm Password"
                 type="password"
                 onChange={handleChange}
@@ -178,16 +217,7 @@ export default function SignUpComponent() {
                 color="primary"
                 className="mt-4 w-full text-lg p-2"
               >
-                Sign In
-              </Button>
-              <Button
-                sx={{ textTransform: "none" }}
-                startIcon={<GoogleIcon />}
-                variant="contained"
-                color="secondary"
-                className="mt-4 w-full text-lg p-2"
-              >
-                Sign In with Google
+                Sign Up
               </Button>
             </ThemeProvider>
           </form>
