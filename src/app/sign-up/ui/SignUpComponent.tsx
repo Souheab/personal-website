@@ -1,7 +1,13 @@
 "use client";
-import { TextField, Button, IconButton, InputAdornment, createTheme } from "@mui/material";
+import {
+  TextField,
+  Button,
+  IconButton,
+  InputAdornment,
+  createTheme,
+} from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import GoogleIcon from '@mui/icons-material/Google';
+import GoogleIcon from "@mui/icons-material/Google";
 import { red, blue } from "@mui/material/colors";
 import { useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
@@ -17,7 +23,7 @@ const theme = createTheme({
       main: red[600],
     },
   },
-})
+});
 
 const handleMouseDownPassword = (
   event: React.MouseEvent<HTMLButtonElement>,
@@ -25,20 +31,18 @@ const handleMouseDownPassword = (
   event.preventDefault();
 };
 
-// const schema = Joi.object({
-//   email: Joi.string().email().required(),
-//   password: Joi.string().min(8).required(),
-//   confirmPassword: Joi.ref("password"),
-// });
-
 export default function SignUpComponent() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
+  const handleClickShowConfirmPassword = () =>
+    setShowConfirmPassword((show) => !show);
 
-
+  const emailValidationSchema = Joi.string()
+    .email({ tlds: { allow: false } })
+    .required();
+  const passwordValidationSchema = Joi.string().min(8).required();
   return (
     <div className="flex flex-col justify-center items-center h-screen bg-slate-100">
       <Formik
@@ -50,24 +54,70 @@ export default function SignUpComponent() {
         onSubmit={(values) => {
           console.log(values);
         }}
+        validate={(values) => {
+          const errors: any = {};
+
+          const emailValidation = emailValidationSchema.validate(values.email);
+          if (emailValidation.error) {
+            errors.email = emailValidation.error;
+          }
+
+          const passwordValidation = passwordValidationSchema.validate(values.password);
+
+          if (passwordValidation.error) {
+            errors.password = passwordValidation.error;
+          }
+
+          const confirmPasswordValidation =
+            values.password === values.confirmPassword
+              ? null
+              : new Error("Passwords do not match");
+          if (confirmPasswordValidation !== null) {
+            errors.confirmPassword = confirmPasswordValidation;
+          }
+
+          return errors;
+        }}
       >
         {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
           handleSubmit,
+          isSubmitting,
         }) => (
-          <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center border p-8 bg-white rounded w-[450px]">
-            <h1 className="text-slate-600 mb-5 text-xl">
-              Sign In
-            </h1>
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col justify-center items-center border p-8 bg-white rounded w-[450px]"
+          >
+            <h1 className="text-slate-600 mb-5 text-xl">Sign In</h1>
             <div className="w-full text-slate-950 my-2">
               <div className="mb-2">Email</div>
-              <TextField fullWidth placeholder="mail@example.com" />
+              <TextField
+                name="email"
+                error={(errors.email && touched.email) !== undefined}
+                helperText={(errors.email && touched.email) !== undefined ? "Please enter a valid email address" : undefined}
+                fullWidth
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="mail@example.com"
+              />
             </div>
             <div className="w-full text-slate-950 my-2">
               <div className="mb-2">Password</div>
               <TextField
                 fullWidth
+                name="password"
+                error={(errors.password && touched.password) !== undefined}
+                helperText={(errors.password && touched.password) !== undefined ? "Password must be at least 8 characters long" : undefined}
                 placeholder="Enter your password"
                 type="password"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.password}
                 InputProps={{
                   type: showPassword ? "text" : "password",
                   endAdornment: (
@@ -89,8 +139,14 @@ export default function SignUpComponent() {
               <div className="mb-2">Confirm Password</div>
               <TextField
                 fullWidth
+                name="confirmPassword"
+                error={(errors.confirmPassword && touched.confirmPassword) !== undefined}
+                helperText={(errors.confirmPassword && touched.confirmPassword) !== undefined ? "Passwords do not match"  : undefined}
                 placeholder="Confirm Password"
                 type="password"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.confirmPassword}
                 InputProps={{
                   type: showConfirmPassword ? "text" : "password",
                   endAdornment: (
@@ -101,7 +157,11 @@ export default function SignUpComponent() {
                         onMouseDown={handleMouseDownPassword}
                         edge="end"
                       >
-                        {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                        {showConfirmPassword ? (
+                          <Visibility />
+                        ) : (
+                          <VisibilityOff />
+                        )}
                       </IconButton>
                     </InputAdornment>
                   ),
@@ -109,10 +169,23 @@ export default function SignUpComponent() {
               />
             </div>
             <ThemeProvider theme={theme}>
-              <Button type="submit" sx={{ textTransform: "none" }} variant="contained" color="primary" className="mt-4 w-full text-lg p-2">
+              <Button
+                disabled={isSubmitting}
+                type="submit"
+                sx={{ textTransform: "none" }}
+                variant="contained"
+                color="primary"
+                className="mt-4 w-full text-lg p-2"
+              >
                 Sign In
               </Button>
-              <Button sx={{ textTransform: "none" }} startIcon={<GoogleIcon />} variant="contained" color="secondary" className="mt-4 w-full text-lg p-2">
+              <Button
+                sx={{ textTransform: "none" }}
+                startIcon={<GoogleIcon />}
+                variant="contained"
+                color="secondary"
+                className="mt-4 w-full text-lg p-2"
+              >
                 Sign In with Google
               </Button>
             </ThemeProvider>
