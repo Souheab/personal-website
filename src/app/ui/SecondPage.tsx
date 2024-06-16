@@ -1,10 +1,11 @@
 import SkillsList from "./SkillsList";
 import SkillsListItem from "./SkillsListItem";
+import SectionHeader from "./SectionHeader";
 
 export default function SecondPage() {
   return (
     <section className="panel technical-skills-section-div min-w-full min-h-screen flex flex-col items-center justify-center p-5 text-center">
-      <h1 className="text-5xl py-10 min mb-20">Technical Skills</h1>
+      <SectionHeader title="Technical Skills" />
       <div className="sm:flex w-5/6 py-5 gap-4">
         <SkillsList
           skillsListTitle="Languages"
