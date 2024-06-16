@@ -12,7 +12,7 @@ export default function SectionHeader(props: SectionHeaderProps) {
         props.className === undefined ? "" : props.className,
       )}
     >
-      <Typewriter text={props.title} delay={200} />
+      <Typewriter text={props.title} delay={150} />
     </h1>
   );
 }
