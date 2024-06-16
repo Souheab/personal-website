@@ -60,21 +60,21 @@ export default function SignUpComponent(props: SignUpComponentProps) {
             email: values.email,
             password: values.password,
             createdAt: new Date(),
-          }).then(() => {
-            setTimeout(() => {
-              setSubmitting(false);
-              props.onSignUp(true);
-            }
-              , 500);
-          }).catch((e) => {
-            setTimeout(() => {
-              console.log("unable to create user");
-              console.log(e);
-              setSubmitting(false);
-              props.onSignUp(false);
-            }
-              , 500);
-          });
+          })
+            .then(() => {
+              setTimeout(() => {
+                setSubmitting(false);
+                props.onSignUp(true);
+              }, 500);
+            })
+            .catch((e) => {
+              setTimeout(() => {
+                console.log("unable to create user");
+                console.log(e);
+                setSubmitting(false);
+                props.onSignUp(false);
+              }, 500);
+            });
         }}
         validate={(values) => {
           const errors: any = {};
@@ -178,7 +178,7 @@ export default function SignUpComponent(props: SignUpComponentProps) {
                 }
                 helperText={
                   (errors.confirmPassword && touched.confirmPassword) !==
-                    undefined
+                  undefined
                     ? "Passwords do not match"
                     : undefined
                 }

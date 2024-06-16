@@ -4,14 +4,17 @@ import SignUpComponent from "./ui/SignUpComponent";
 import SignUpCompletePageComponent from "./ui/SignUpCompletePageComponent";
 
 export default function SignUp() {
-  const [signUpSuccess, setSignUpSuccess] = useState((undefined as boolean | undefined));
+  const [signUpSuccess, setSignUpSuccess] = useState(
+    undefined as boolean | undefined,
+  );
 
   if (signUpSuccess === undefined) {
-    return <SignUpComponent
-      onSignUp={(signUpSuccess: boolean) => setSignUpSuccess(signUpSuccess)}
-    />;
+    return (
+      <SignUpComponent
+        onSignUp={(signUpSuccess: boolean) => setSignUpSuccess(signUpSuccess)}
+      />
+    );
   }
 
   return <SignUpCompletePageComponent signUpSuccess={signUpSuccess} />;
-
 }
