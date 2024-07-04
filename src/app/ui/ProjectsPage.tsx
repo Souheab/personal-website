@@ -5,78 +5,74 @@ import ProjectContainer from "./ProjectContainer";
 import ProjectsLayout from "./ProjectsLayout";
 import React from "react";
 
+let id = 0;
+
 const projects = new Map([
   [
     "Web Dev",
-    <>
-      <ProjectContainer
-        {...{
-          title: "Personal Website",
-          description:
-            "This website was created using React and Tailwind CSS. It is hosted on Vercel and the source code is available on GitHub.",
-          imageUrl: "https://dummyimage.com/300x300/eee/aaa",
-          href: "https://souheab.com",
-        }}
-      />
-      <ProjectContainer
-        {...{
-          title: "Personal Website",
-          description:
-            "This website was created using React and Tailwind CSS. It is hosted on Vercel and the source code is available on GitHub.",
-          imageUrl: "https://dummyimage.com/300x300/eee/aaa",
-          href: "https://souheab.com",
-        }}
-      />
-      <ProjectContainer
-        {...{
-          title: "Personal Website",
-          description:
-            "This website was created using React and Tailwind CSS. It is hosted on Vercel and the source code is available on GitHub.",
-          imageUrl: "https://dummyimage.com/300x300/eee/aaa",
-          href: "https://souheab.com",
-        }}
-      />
-    </>,
+    [
+      {
+        title: "Personal Website",
+        description:
+          "This website was created using React and Tailwind CSS. It is hosted on Vercel and the source code is available on GitHub.",
+        imageUrl: "https://dummyimage.com/300x300/eee/aaa",
+        href: "https://souheab.com",
+        id: id++,
+      },
+      {
+        title: "Personal Website",
+        description:
+          "This website was created using React and Tailwind CSS. It is hosted on Vercel and the source code is available on GitHub.",
+        imageUrl: "https://dummyimage.com/300x300/eee/aaa",
+        href: "https://souheab.com",
+        id: id++,
+      },
+      {
+        title: "Personal Website",
+        description:
+          "This website was created using React and Tailwind CSS. It is hosted on Vercel and the source code is available on GitHub.",
+        imageUrl: "https://dummyimage.com/300x300/eee/aaa",
+        href: "https://souheab.com",
+        id: id++,
+      }
+    ]
   ],
   [
     "C",
-    <>
-      <ProjectContainer
-        {... {
-          title: "C Snake Game",
-          description: "This is a simple snake game created using C and ncurses",
-          imageUrl: "https://dummyimage.com/300x300/eee/aaa",
-          href: "https://github.com/Souheab/csnake",
-        }}
-      />
-    </>
+    [
+      {
+        title: "C Snake Game",
+        description: "This is a simple snake game created using C and ncurses",
+        imageUrl: "https://dummyimage.com/300x300/eee/aaa",
+        href: "https://github.com/Souheab/csnake",
+        id: id++,
+      }
+    ]
   ],
   [
     "Go",
-    <>
-      <ProjectContainer
-        {... {
-          title: "Go Terminal",
-          description: "This is a simple snake game created using C and ncurses",
-          imageUrl: "https://dummyimage.com/300x300/eee/aaa",
-          href: "https://github.com/Souheab/gotuifm",
-        }}
-      />
-    </>
+    [
+      {
+        title: "Go Terminal",
+        description: "This is a simple snake game created using C and ncurses",
+        imageUrl: "https://dummyimage.com/300x300/eee/aaa",
+        href: "https://github.com/Souheab/gotuifm",
+        id: id++,
+      }
+    ]
   ],
   [
     "Python",
-    <>
-      <ProjectContainer
-        {... {
-          title: "Python Video to Slides converter",
-          description:
-            "A python program that converts a video into a series of images and then into a pdf file",
-          imageUrl: "https://dummyimage.com/300x300/eee/aaa",
-          href: "https://github.com/Souheab/vid2slides",
-        }}
-      />
-    </>
+    [
+      {
+        title: "Python Video to Slides converter",
+        description:
+          "A python program that converts a video into a series of images and then into a pdf file",
+        imageUrl: "https://dummyimage.com/300x300/eee/aaa",
+        href: "https://github.com/Souheab/vid2slides",
+        id: id++,
+      }
+    ]
   ],
 ]);
 
@@ -98,9 +94,8 @@ export default function ProjectsPage() {
         }}
         selectedOption={selectedOption}
       />
-      <ProjectsLayout>
-        {projects.get(options[selectedOption])}
-      </ProjectsLayout>
-    </section>
+
+      <ProjectsLayout projects={projects.get(options[selectedOption])!}/>
+    </section >
   );
 }

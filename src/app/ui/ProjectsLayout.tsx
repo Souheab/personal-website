@@ -1,39 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import {motion} from "framer-motion";
+import ProjectContainer, { Project } from "./ProjectContainer";
 
 interface ProjectsLayoutProps {
-  children: React.ReactNode;
+  projects: Project[];
 }
 
-// HACK: Solution for animation is a little hacky, can be done better
-
-export default function ProjectsLayout({ children }: ProjectsLayoutProps) {
-  const [isVisible, setIsVisible] = useState(false);
-  const [currentChildren, setCurrentChildren] = useState(children);
-
-  useEffect(() => {
-    setIsVisible(false);
-    // fade out
-    const timer = setTimeout(() => {
-      setCurrentChildren(children);
-    }, 400);
-
-    // fade in
-    const timer2 = setTimeout(() => {
-      setIsVisible(true);
-    }, 800);
-    return () => {
-      clearTimeout(timer);
-      clearTimeout(timer2);
-    }
-  }, [children]);
-
-  const childrenArray = React.Children.toArray(currentChildren);
-  const flattenedChildren = childrenArray.flatMap((child) =>
-    React.isValidElement(child) && child.type === React.Fragment
-      ? React.Children.toArray(child.props.children)
-      : child
-  );
-  const childrenCount = flattenedChildren.length;
+export default function ProjectsLayout(props: ProjectsLayoutProps) {
+  const childrenCount = props.projects.length;
 
   let layoutClass = "";
   if (childrenCount === 1) {
@@ -50,15 +24,13 @@ export default function ProjectsLayout({ children }: ProjectsLayoutProps) {
     <div className={`container mx-auto px-4 py-8 gap-5 ${layoutClass}`}>
       {childrenCount === 3 ? (
         <>
-          <div className="col-span-1">{React.cloneElement(flattenedChildren[0] as React.ReactElement, { isVisible })}</div>
-          <div className="col-span-1">{React.cloneElement(flattenedChildren[1] as React.ReactElement, { isVisible })}</div>
-          <div className="col-span-2">{React.cloneElement(flattenedChildren[2] as React.ReactElement, { isVisible })}</div>
+          <ProjectContainer{...props.projects[0]}></ProjectContainer>
+          <ProjectContainer{...props.projects[1]}></ProjectContainer>
+          <ProjectContainer{...props.projects[2]}></ProjectContainer>
         </>
       ) : (
-        flattenedChildren.map((child, index) => (
-          <div key={index} className="w-full h-full">
-            {React.cloneElement(child as React.ReactElement, { isVisible })}
-          </div>
+        props.projects.map((project) => (
+            <ProjectContainer key={project.id} {...project}></ProjectContainer>
         ))
       )}
     </div>
