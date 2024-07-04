@@ -10,7 +10,7 @@ export default function Typewriter(props: TypewriterProps) {
   const [displayText, setDisplayText] = useState("");
   const index = useRef(0);
   const displayTextRef = useRef("");
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(false);
 
   // I would like to use the useInView hook from react-intersection-observer here but for some reason it doesn't work
   // Using useIntersectionObserver instead
@@ -18,7 +18,7 @@ export default function Typewriter(props: TypewriterProps) {
     root: null,
     rootMargin: "0px",
     threshold: 0.1,
-  })
+  });
 
   useEffect(() => {
     if (!isVisible) return;
