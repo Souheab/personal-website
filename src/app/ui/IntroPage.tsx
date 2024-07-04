@@ -1,4 +1,4 @@
-export default function FirstPage() {
+export default function IntroPage() {
   return (
     <section className="panel intro-section-div min-h-screen flex items-center justify-center sm:p-24 p-6 text-slate-200 bg-violet-950">
       <div className="flex flex-col sm:flex-row gap-8 items-center justify-center animate-fade-in">

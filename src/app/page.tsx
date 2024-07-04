@@ -1,9 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import FirstPage from "./ui/FirstPage";
-import SecondPage from "./ui/SecondPage";
-import ThirdPage from "./ui/ThirdPage";
+import IntroPage from "./ui/IntroPage";
+import SkillsPage from "./ui/SkillsPage";
+import ContactPage from "./ui/ContactPage";
 import ReactPageScroller from "react-page-scroller";
+import ProjectsPage from "./ui/ProjectsPage";
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
@@ -22,15 +23,17 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between">
       {isMobile ? (
         <>
-          <FirstPage />
-          <SecondPage />
-          <ThirdPage />
+          <IntroPage />
+          <SkillsPage />
+          <ProjectsPage />
+          <ContactPage />
         </>
       ) : (
         <ReactPageScroller>
-          <FirstPage />
-          <SecondPage />
-          <ThirdPage />
+          <IntroPage />
+          <SkillsPage />
+          <ProjectsPage />
+          <ContactPage />
         </ReactPageScroller>
       )}
     </main>

@@ -1,6 +1,6 @@
 import SectionHeader from "./SectionHeader";
 
-export default function ThirdPage() {
+export default function ContactPage() {
   return (
     <section className="panel contact-info-section-div min-h-screen relative flex flex-col items-center">
       <SectionHeader className="sm:text-5xl py-10 min mb-20 text-center" title="Contact Me"/>
