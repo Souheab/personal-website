@@ -1,3 +1,5 @@
+import BobbingArrow from "./BobbingArrow";
+
 export default function IntroPage() {
   return (
     <section className="panel intro-section-div min-h-screen relative flex items-center justify-center sm:p-24 p-6 text-slate-200">
@@ -10,6 +12,7 @@ export default function IntroPage() {
             I am a software engineer who loves to build things and learn new
             technologies.
           </div>
+          <BobbingArrow className="absolute bottom-5 left-1/2 -translate-x-1/2" />
         </div>
       </div>
     </section>

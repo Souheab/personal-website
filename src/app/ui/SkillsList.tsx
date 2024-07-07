@@ -15,7 +15,7 @@ export default function SkillsList(props: SkillsListProps) {
   return (
     <div
       ref={ref}
-      className={`border border-slate-400 m-2 my-5 rounded flex-1 p-5 transition-all duration-2000 ${
+      className={`bg-slate-100 border border-slate-400 m-2 my-5 rounded-lg flex-1 p-5 transition-all duration-2000${
         inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >

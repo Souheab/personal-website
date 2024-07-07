@@ -13,6 +13,7 @@ const config: Config = {
       },
       animation: {
         "fade-in": "fadeIn 1s ease-in-out",
+        'gradient-x': 'gradient-x 15s ease infinite',
       },
 
       keyframes: {
@@ -22,6 +23,16 @@ const config: Config = {
             transform: 'translateY(100px)',
           },
           "100%": { opacity: '1' },
+        },
+        'gradient-x': {
+          '0%, 100%': {
+            'background-size': '400% 400%',
+            'background-position': 'left center'
+          },
+          '50%': {
+            'background-size': '400% 400%',
+            'background-position': 'right center'
+          },
         },
       },
 

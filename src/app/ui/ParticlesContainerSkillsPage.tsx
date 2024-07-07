@@ -1,23 +1,17 @@
-import { useEffect, useMemo, useState } from "react";
-import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { useMemo, useState } from "react";
+import Particles from "@tsparticles/react";
 import {
   type Container,
   type ISourceOptions,
   MoveDirection,
   OutMode,
 } from "@tsparticles/engine";
-import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadSlim`, install the "@tsparticles/slim" package too.
 
-export default function ParticlesContainer() {
-  const [init, setInit] = useState(false);
+interface ParticlesContainerSkillsPageProps {
+  init: boolean;
+}
 
-  useEffect(() => {
-    initParticlesEngine(async (engine) => {
-      await loadSlim(engine);
-    }).then(() => {
-      setInit(true);
-    });
-  }, []);
+export default function ParticlesContainerSkillsPage(props: ParticlesContainerSkillsPageProps) {
 
   const particlesLoaded = async (container?: Container): Promise<void> => {
     console.log(container);
@@ -31,10 +25,10 @@ export default function ParticlesContainer() {
       },
       background: {
         color: {
-          value: "#4E1095",
+          value: "#000033", // Dark blue night sky color
         },
       },
-      fpsLimit: 120,
+      fpsLimit: 60,
       interactivity: {
         events: {
           onClick: {
@@ -43,7 +37,7 @@ export default function ParticlesContainer() {
           },
           onHover: {
             enable: true,
-            mode: "repulse",
+            mode: "grab",
           },
         },
         modes: {
@@ -61,11 +55,7 @@ export default function ParticlesContainer() {
           value: "#ffffff",
         },
         links: {
-          color: "#ffffff",
-          distance: 150,
-          enable: true,
-          opacity: 0.5,
-          width: 1,
+          enable: false,
         },
         move: {
           direction: MoveDirection.none,
@@ -73,24 +63,30 @@ export default function ParticlesContainer() {
           outModes: {
             default: OutMode.out,
           },
-          random: false,
-          speed: 6,
+          random: true,
+          speed: 0.8,
           straight: false,
         },
         number: {
           density: {
             enable: true,
+            area: 800,
           },
-          value: 80,
+          value: 600,
         },
         opacity: {
-          value: 0.5,
+          value: { min: 0.1, max: 1 },
+          animation: {
+            enable: true,
+            speed: 1,
+            minimumValue: 0.1,
+          },
         },
         shape: {
           type: "circle",
         },
         size: {
-          value: { min: 1, max: 5 },
+          value: { min: 1, max: 3 },
         },
       },
       detectRetina: true,
@@ -98,10 +94,10 @@ export default function ParticlesContainer() {
     [],
   );
 
-  if (init) {
+  if (props.init) {
     return (
       <Particles
-        id="tsparticles"
+        id="tsparticlesskillspage"
         particlesLoaded={particlesLoaded}
         options={options}
       />
@@ -109,4 +105,4 @@ export default function ParticlesContainer() {
   }
 
   return <></>;
-};
+}
