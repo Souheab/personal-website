@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadSlim`, install the "@tsparticles/slim" package too.
 import ParticlesContainerSkillsPage from "./ui/ParticlesContainerSkillsPage";
+import ThreeDElementsScene from './ui/ThreeDElementsScene';
+import BoxComp from "./ui/BoxComp";
 
 export default function Home() {
   const [particlesEngineInit, setParticlesEngineInit] = useState(false);
@@ -27,6 +29,8 @@ export default function Home() {
       <IntroPage />
       <SkillsPage />
       <ProjectsPage />
+      <ThreeDElementsScene />
+      <BoxComp />
       <ContactPage />
     </>
   );
